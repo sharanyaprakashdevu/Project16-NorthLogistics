@@ -34,20 +34,23 @@ const User=mongoose.model("UserInfo");
 //Create register api
 app.post("/register",async(req,res)=>{
 
-    const {fname,lname,email,password}=req.body;
+    const {fname,lname,email,password,userType}=req.body;
+
     const encryptPassword=await bcrypt.hash(password,10);
     try{
         const oldUser=await User.findOne({email});
+        
         if(oldUser){
            return res.json({error:"User Exists"});
            
-        }//alert("Already registered");
-        //create new user
+        }
+
         await User.create({
             fname,
             lname,
             email,
             password:encryptPassword,
+            userType
         });
         res.send({status:"ok"});
         //alert("Registered successfully");
@@ -109,6 +112,59 @@ app.post("/userData",async(req,res)=>{
     }
 });
 
+//import  Vehicle details Schema
+require("./vehicleDetails");
+
+const Vehicle=mongoose.model("VehicleInfo");
+//Create register api
+app.post("/vehicle_register",async(req,res)=>{
+
+    const {vehicleType,loadCapacity,passengerSeating,charges,chargesDaily}=req.body;
+
+    
+    try{
+       
+
+        await Vehicle.create({
+            vehicleType,
+            loadCapacity,
+            passengerSeating,
+            charges,
+            chargesDaily
+        });
+        res.send({status:"ok"});
+        //alert("Registered successfully");
+    }
+    catch(error)
+    {
+        res.send({status:"error"});
+        
+    }
+});
+
+//fetch user data
+app.get("/getAllUser",async(req,res)=>{
+    try{
+        const allUser=await User.find({});
+        res.send({status:"ok",data:allUser});
+        
+    }
+    catch(error){
+        console.log(error);
+    }
+});
+
+//fetch rental vehicle details
+app.get("/getAllVehicle",async(req,res)=>{
+    try{
+        const allVehicle=await Vehicle.find({});
+        res.send({status:"ok",data:allVehicle});
+        
+    }
+    catch(error){
+        console.log(error);
+    }
+});
 
 app.listen(5000,()=>{
     console.log("Server Started");

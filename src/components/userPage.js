@@ -1,14 +1,20 @@
-import React, { Component } from 'react'
+import React, { Component,useEffect,useState } from 'react'
+//import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import UserHome from './userHome';
+import AdminHome from './adminHome';
 
-export default class UserPage extends Component {
-   //create state
-    constructor(props){
-        super(props)
-        this.state={
-          userData:"",
-        };
-    }
-componentDidMount(){
+//import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
+//import './App.css'
+//import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+
+//import UserHome from './components/userHome.js'
+
+export default function UserPage(){
+  const [userData,setUserData]=useState("");
+  const [admin,setAdmin]=useState(false);
+
+
+useEffect(()=>{
     fetch("http://localhost:5000/userData",{
       method:"POST",
       crossDomain:true,
@@ -24,30 +30,21 @@ componentDidMount(){
     .then((res)=>res.json())
     .then((data)=>{
     console.log(data,"userData");
-    this.setState({userData:data.data});
+    
+    if(data.data.userType=="Admin"){
+      setAdmin(true);
+    }
+
+    setUserData(data.data);
 
     
     });
-}
+},[]);
 
 
-//Logout function
-logOut=()=>{
-    //clear data from local storage
-    window.localStorage.clear();
-    window.location.href="./sign-in";
-};
+return (
+  //admin?<h1>"Welcome Admin"</h1>:<UserHome userData={userData}/>
+  admin?<AdminHome userData={userData}/>:<UserHome userData={userData}/>
+);
 
-render() {
-    return(
-        <div>
-            Hello...<h1>{this.state.userData.fname}</h1>
-            <br/>
-            <button onClick={this.logOut} className="btn btn-primary">
-                LOG OUT
-            </button>
-
-        </div>
-    );
-}
 }

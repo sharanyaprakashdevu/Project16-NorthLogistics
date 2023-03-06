@@ -4,7 +4,7 @@
   box-sizing: border-box;
 }
 body {
-  background: #1cf9af !important;
+  background: #b6efe8 !important;
   min-height: 100vh;
   display: flex;
   font-weight: 400;
@@ -66,6 +66,17 @@ html,
   padding-bottom: 20px;
 }
 
+.auth-wrapper table{
+  border:2px solid black;
+}
+
+.auth-wrapper th{
+  border:2px solid black;
+}
+
+.auth-wrapper td{
+  border:2px solid black;
+}
 .custom-control-label {
   font-weight: 400;
 }

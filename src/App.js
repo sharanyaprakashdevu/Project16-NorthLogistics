@@ -6,16 +6,23 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import Login from './components/login.component'
 import SignUp from './components/signup.component'
 import UserPage from './components/userPage'
+import UserHome from './components/userHome'
+import AdminHome from './components/adminHome'
+import AddVehicle from './components/addVehicle'
+import Users from './components/users'
+import Rental from './components/rental'
+
+
 
 function App() {
-  const isLoggedIn=window.localStorage.getItem("loggedIn");
+  //const isLoggedIn=window.localStorage.getItem("loggedIn");
   return (
     <Router>
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-light fixed-top">
           <div className="container">
             <Link className="navbar-brand" to={'/sign-in'}>
-              North Logistics
+              North Logistic
             </Link>
             <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
               <ul className="navbar-nav ml-auto">
@@ -35,12 +42,21 @@ function App() {
         </nav>
 
         <div className="auth-wrapper">
-          <div className="auth-inner">
+          <div className="auth-inner" style={{width:"auto"}}>
             <Routes>
-              <Route exact path="/" element={isLoggedIn=="true"?<UserPage/>:<Login />} />
+              
+            <Route exact path="/" element={<Login />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/userPage" element={<UserPage />} />
+              <Route path="/userHome" element={<UserHome />} />
+              <Route path="/adminHome" element={<AdminHome />} />
+              <Route path="/addVehicle" element={<AddVehicle />} />
+              <Route path="/users" element={<Users />} />
+              <Route path="/rental" element={<Rental />} />
+
+              
+              
             </Routes>
           </div>
         </div>

@@ -38,7 +38,7 @@ export default class Login extends Component {
       alert("login successfull");
       window.localStorage.setItem("token",data.data);
       window.localStorage.setItem("loggedIn",true);
-      window.location.href ="./userPage";
+      window.location.href ="/userPage";
       }
     });
 

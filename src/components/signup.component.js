@@ -1,28 +1,29 @@
-import React, { Component } from 'react'
+import React, { Component,useState } from 'react'
 
-export default class SignUp extends Component {
+export default function SignUp(){
 
+  const [fname, setFname] = useState("");
+  const [lname, setLname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [userType,setUserType]=useState("")
+  const [secretKey,setSecretKey]=useState("")
   //Get values
 
-  constructor(props){
-    super(props)
-    this.state={
-      fname:"",
-      lname:"",
-      email:"",
-      password:""
-    };
-    //bind data
-  this.handleSubmit=this.handleSubmit.bind(this);
-  }
+  
 
   
   //Submit function
-  handleSubmit(e){
-    e.preventDefault();
-    const{fname,lname,email,password} = this.state;
-    console.log(fname,lname,email,password);
-    fetch("http://localhost:5000/register",{
+ const handleSubmit=(e) => {
+
+    if(userType=="Admin" && secretKey!="lambton"){
+      e.preventDefault();
+      alert("Invalid Admin")
+    }
+    else{
+      e.preventDefault();
+      console.log(fname,lname,email,password);
+      fetch("http://localhost:5000/register",{
       method:"POST",
       crossDomain:true,
       headers:{
@@ -34,7 +35,8 @@ export default class SignUp extends Component {
         fname,
         lname,
         email,
-        password
+        password,
+        userType
       }),
     })
     .then((res)=>res.json())
@@ -52,14 +54,47 @@ export default class SignUp extends Component {
       }
     });
 
-    //});
-    
+    }
+   
+     
   }
 
-  render() {
     return (
-      <form onSubmit={this.handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <h3>Sign Up</h3>
+
+        <div>
+          <b>Register As </b>
+          
+          <input type="radio" 
+          name="UserType" 
+          value="User"
+          onChange={(e)=>setUserType(e.target.value)}
+          />
+          User
+          
+          <input type="radio" 
+          name="UserType" 
+          value="Admin"
+          onChange={(e)=>setUserType(e.target.value)}
+          />
+          Admin
+        </div>
+
+     
+        {userType=="Admin" ? (
+        <div className="mb-3">
+          <label>Secret Key</label>
+          <input
+            type="password"
+            className="form-control"
+            placeholder="Secret Key"
+            //access values
+            onChange={(e)=>setSecretKey(e.target.value)}
+          />
+        </div>) :null
+        }
+
 
         <div className="mb-3">
           <label>First name</label>
@@ -68,14 +103,15 @@ export default class SignUp extends Component {
             className="form-control"
             placeholder="First name"
             //access values
-            onChange={e=>this.setState({fname:e.target.value})}
+            onChange={(e)=>setFname(e.target.value)}
           />
         </div>
 
         <div className="mb-3">
           <label>Last name</label>
           <input type="text" className="form-control" placeholder="Last name"
-          onChange={e=>this.setState({lname:e.target.value})} />
+           onChange={(e)=>setLname(e.target.value)}
+           />
         </div>
 
         <div className="mb-3">
@@ -84,7 +120,7 @@ export default class SignUp extends Component {
             type="email"
             className="form-control"
             placeholder="Enter email"
-            onChange={e=>this.setState({email:e.target.value})}
+            onChange={(e)=>setEmail(e.target.value)}
           />
         </div>
 
@@ -94,7 +130,7 @@ export default class SignUp extends Component {
             type="password"
             className="form-control"
             placeholder="Enter password"
-            onChange={e=>this.setState({password:e.target.value})}
+            onChange={(e)=>setPassword(e.target.value)}
           />
         </div>
 
@@ -109,4 +145,4 @@ export default class SignUp extends Component {
       </form>
     )
   }
-}
+
