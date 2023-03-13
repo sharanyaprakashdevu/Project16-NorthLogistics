@@ -3,12 +3,6 @@ import React, { Component,useEffect,useState } from 'react'
 import UserHome from './userHome';
 import AdminHome from './adminHome';
 
-//import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
-//import './App.css'
-//import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-
-//import UserHome from './components/userHome.js'
-
 export default function UserPage(){
   const [userData,setUserData]=useState("");
   const [admin,setAdmin]=useState(false);

@@ -11,7 +11,8 @@ import AdminHome from './components/adminHome'
 import AddVehicle from './components/addVehicle'
 import Users from './components/users'
 import Rental from './components/rental'
-
+import AddShipment from './components/addShipment'
+import ConfirmShipment from './components/confirmShipment'
 
 
 function App() {
@@ -42,7 +43,7 @@ function App() {
         </nav>
 
         <div className="auth-wrapper">
-          <div className="auth-inner" style={{width:"auto"}}>
+          <div className="auth-inner">
             <Routes>
               
             <Route exact path="/" element={<Login />} />
@@ -51,10 +52,11 @@ function App() {
               <Route path="/userPage" element={<UserPage />} />
               <Route path="/userHome" element={<UserHome />} />
               <Route path="/adminHome" element={<AdminHome />} />
-              <Route path="/addVehicle" element={<AddVehicle />} />
               <Route path="/users" element={<Users />} />
+              <Route path="/addVehicle" element={<AddVehicle />} />
               <Route path="/rental" element={<Rental />} />
-
+              <Route path="/addShipment" element={<AddShipment />} />
+              <Route path="/confirmShipment" element={<ConfirmShipment />} />
               
               
             </Routes>

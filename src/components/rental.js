@@ -1,6 +1,8 @@
 import React, { Component,useEffect,useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
+
+
 export default function Rental(){
 
     const [data,setData]=useState("");
@@ -16,6 +18,7 @@ export default function Rental(){
     
     });
 },[]);
+
 
 return(
     <div>
@@ -33,7 +36,7 @@ return(
                   </li>
   
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/rental'}>
+                    <Link className="nav-link" to={'/addShipment'}>
                     Shipment
                     </Link>
                   </li>
@@ -67,6 +70,7 @@ return(
                 <th>4 Hours charge</th>
                 <th>Daily charge</th>
                 </tr>
+                
                 {data.map(i=>{
                     return(
                         <tr>
@@ -79,6 +83,7 @@ return(
                         </tr>
                     )
                 })}
+
             </table>
         </div>
     </div>

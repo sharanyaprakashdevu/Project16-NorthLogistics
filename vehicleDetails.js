@@ -2,6 +2,7 @@ const mongoose=require("mongoose");
 
 const VehicleDetailsSchema=new mongoose.Schema(
     {
+        image:String,
         vehicleType:String,
         loadCapacity:Number,
         passengerSeating:Number,

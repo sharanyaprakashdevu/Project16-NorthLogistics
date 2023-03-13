@@ -119,13 +119,14 @@ const Vehicle=mongoose.model("VehicleInfo");
 //Create register api
 app.post("/vehicle_register",async(req,res)=>{
 
-    const {vehicleType,loadCapacity,passengerSeating,charges,chargesDaily}=req.body;
+    const {base64,vehicleType,loadCapacity,passengerSeating,charges,chargesDaily}=req.body;
 
     
     try{
        
 
         await Vehicle.create({
+            image:base64,
             vehicleType,
             loadCapacity,
             passengerSeating,
@@ -165,6 +166,57 @@ app.get("/getAllVehicle",async(req,res)=>{
         console.log(error);
     }
 });
+
+
+//Delete user
+
+app.post("/deleteUser",async(req,res)=>{
+    const {userid} =req.body;
+    try{
+        User.deleteOne({_id:userid},function(err,res){
+            console.log(err);
+
+        });
+        res.send({status:"Ok",data:"Deleted"});
+    }
+    catch(error){
+        console.log(error);
+    }
+});
+
+//shipment api
+
+require("./shipmentDetails");
+const Shipment=mongoose.model("ShipmentInfo");
+
+app.post("/shipment_register",async(req,res)=>{
+
+    const {fname,phone,addressFrom,addressTo,selectedShip,selectedService,dimensions}=req.body;
+  
+    
+    try{
+
+    await Shipment.create({
+      fname,
+      phone,
+      addressFrom,
+      addressTo,
+      selectedShip,
+      selectedService,
+      dimensions
+       });
+
+        res.send({status:"ok"});
+        
+    }
+    catch(error)
+    {
+        res.send({status:"error1"});
+        
+    }
+});
+
+
 
 app.listen(5000,()=>{
     console.log("Server Started");

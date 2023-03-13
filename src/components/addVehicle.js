@@ -2,17 +2,30 @@ import React, { Component,useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
 export default function AddVehicle(){
-    
+   
+  const[image,setImage]=useState("");
   const [vehicleType, setvehicleType] = useState("");
   const [loadCapacity, setloadCapacity] = useState("");
   const [passengerSeating, setpassengerSeating] = useState("");
   const [charges, setcharges] = useState("");
   const [chargesDaily,setchargesDaily]=useState("")
 
+  function convertToBase64(e){
+    console.log(e);
+    var reader=new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload=()=>{
+      console.log(reader.result);//base64encoded string
+      setImage(reader.result);
+    };
 
+    reader.onerror=error=>{
+      console.log("Error:",error);
+    };
+  }
     const handleSubmit=(e) => {
       e.preventDefault();
-      console.log(vehicleType,loadCapacity,passengerSeating,charges,chargesDaily);
+      console.log(image,vehicleType,loadCapacity,passengerSeating,charges,chargesDaily);
       fetch("http://localhost:5000/vehicle_register",{
       method:"POST",
       crossDomain:true,
@@ -22,6 +35,7 @@ export default function AddVehicle(){
         "Access-Control-Allow-Origin":"*",
       },
       body:JSON.stringify({
+        base64:image,
         vehicleType,
         loadCapacity,
         passengerSeating,
@@ -86,6 +100,21 @@ return (
 
 <form onSubmit={handleSubmit} style={{width:"auto"}}>
 <h3>Add Vehicle</h3>
+
+<div className="mb-3">
+    <label>Vehicle Image</label>
+    <input 
+     type="file"
+     accept="image/*"
+     className="form-control"
+     onChange={convertToBase64}
+     />
+     {image==""||image==null?"":<img width={150} height={150} scr={image}/>}
+     
+</div>
+
+
+
 
 <div className="mb-3">
     <label>Vehicle Type</label>

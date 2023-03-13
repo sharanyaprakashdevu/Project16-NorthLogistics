@@ -1,11 +1,18 @@
 import React, { Component,useEffect,useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import {faTrash} from "@fortawesome/free-solid-svg-icons";
+import{FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function Users(){
 
     const [data,setData]=useState("");
     useEffect(()=>{
-        fetch("http://localhost:5000/getAllUser",{
+        
+      getAllUser();
+},[]);
+
+const getAllUser=()=>{
+  fetch("http://localhost:5000/getAllUser",{
           method:"GET"         
         })
         
@@ -15,7 +22,33 @@ export default function Users(){
     setData(data.data);
     
     });
-},[]);
+}
+const deleteUser=(id,name)=>{
+
+  if(window.confirm('Are you sure you want to delete?')){
+
+    fetch("http://localhost:5000/deleteUser",{
+      method:"POST",
+      crossDomain:true,
+      headers:{
+        "Content-Type":"application/json",
+        Accept:"application/json",
+        "Access-Control-Allow-Origin":"*",
+      },
+      body:JSON.stringify({
+        userid:id,
+      }),
+    })
+    .then((res)=>res.json())
+    .then((data)=>{
+      alert(data.data);
+      getAllUser();
+    });
+  }
+  else{
+
+  }
+};
 
 return(
 
@@ -56,8 +89,7 @@ return(
               </div>
            </nav>
            
-    
-    <div className="auth-wrapper">
+        <div>
         <div style={{width:"auto"}}>
             <h2>User Info</h2>
             <table style={{width:500}}>
@@ -65,22 +97,27 @@ return(
                 <th>Name</th>
                 <th>Email</th>
                 <th>User Type</th>
-                
+                <th>Delete</th>
                 </tr>
                 {data.map((i)=>{
                     return(
+                      
                         <tr>
                             <td>{i.fname}</td>
                             <td>{i.email}</td>
                             <td>{i.userType}</td>
-                           
-
+                            <td>
+                              <FontAwesomeIcon icon={faTrash} color="red"  onClick={()=>deleteUser(i._id,i.fname)} />
+                            </td>
+                                               
                         </tr>
+                    
                     );
                 })}
             </table>
         </div>
     </div>
+    
     </div>
 )
 }
