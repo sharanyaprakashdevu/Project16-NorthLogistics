@@ -15,7 +15,7 @@ export default function AddShipment() {
   const [addressTo, setaddressTo] = useState("");
   const [shipmentType, setshipmentType] = useState(false);
   const[selectedShip,setSelectedShip]=useState("");
-  const options=['Boxes/Bags','Pallets','Machinery','Containers']
+  const options=[' ','','','Boxes/Bags','Pallets','Machinery','Containers','box']
 
   const [serviceType,setserviceType]=useState(false);
   const [selectedService,setSelectedService]=useState("");
@@ -232,8 +232,6 @@ export default function AddShipment() {
 
       
 </div>    
-
-
 
     )
   }

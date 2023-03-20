@@ -5,7 +5,7 @@ import{FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 export default function Users(){
 
-    const [data,setData]=useState("");
+    const [data,setData]=useState([]);
     useEffect(()=>{
         
       getAllUser();
@@ -89,7 +89,7 @@ return(
               </div>
            </nav>
            
-        <div>
+        <div className="auth-wrapper">
         <div style={{width:"auto"}}>
             <h2>User Info</h2>
             <table style={{width:500}}>

@@ -5,7 +5,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 
 export default function Rental(){
 
-    const [data,setData]=useState("");
+    const [data,setData]=useState([]);
+    const [allImage,setAllImage]=useState("");
     useEffect(()=>{
         fetch("http://localhost:5000/getAllVehicle",{
           method:"GET"         
@@ -62,8 +63,10 @@ return(
     <div className="auth-wrapper">
         <div style={{width:"auto"}}>
             <h2>Vehicle Info</h2>
+            
             <table style={{width:500}}>
                 <tr>
+                <th>Vehicle Image</th>
                 <th>Vehicle Type</th>
                 <th>Load Capacity</th>
                 <th>Passenger Seating</th>
@@ -73,14 +76,18 @@ return(
                 
                 {data.map(i=>{
                     return(
-                        <tr>
-                            <td>{i.vehicleType}</td>
-                            <td>{i.loadCapacity}</td>
-                            <td>{i.passengerSeating}</td>
-                            <td>{i.charges}</td>
-                            <td>{i.chargesDaily}</td>
+                  
+                      <tr>
+                       <td><img width={100} height={100} scr={i.image}/></td>   
+                      
+                      <td>{i.vehicleType}</td>
+                      <td>{i.loadCapacity}</td>
+                      <td>{i.passengerSeating}</td>
+                      <td>{i.charges}</td>
+                      <td>{i.chargesDaily}</td>
 
-                        </tr>
+                  </tr>
+                          
                     )
                 })}
 

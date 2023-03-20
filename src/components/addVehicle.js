@@ -109,7 +109,7 @@ return (
      className="form-control"
      onChange={convertToBase64}
      />
-     {image==""||image==null?"":<img width={150} height={150} scr={image}/>}
+     {image==""||image==null?"":<img width={100} height={100} scr={image}/>}
      
 </div>
 

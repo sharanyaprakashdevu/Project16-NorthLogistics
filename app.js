@@ -216,6 +216,18 @@ app.post("/shipment_register",async(req,res)=>{
     }
 });
 
+//fetch shipment details
+app.get("/getShipmentDetails",async(req,res)=>{
+    const {userid} =req.body;
+    try{
+        const shipmentDetails=await Shipment.find({});
+        res.send({status:"ok",data:shipmentDetails});
+        
+    }
+    catch(error){
+        console.log(error);
+    }
+});
 
 
 app.listen(5000,()=>{
