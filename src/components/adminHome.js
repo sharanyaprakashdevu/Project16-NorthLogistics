@@ -30,13 +30,13 @@ return(
                   </li>
   
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/sign-up'}>
+                    <Link className="nav-link" to={'/viewStorage'}>
                       Storage
                     </Link>
                   </li>
   
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/sign-up'}>
+                    <Link className="nav-link" to={'/viewParking'}>
                       Parking
                     </Link>
                   </li>

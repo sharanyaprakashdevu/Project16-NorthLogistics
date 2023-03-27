@@ -30,13 +30,13 @@ export default function UserHome({ userData }){
                   </li>
   
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/sign-up'}>
+                    <Link className="nav-link" to={'/storage'}>
                       Storage
                     </Link>
                   </li>
   
                   <li className="nav-item">
-                    <Link className="nav-link" to={'/sign-up'}>
+                    <Link className="nav-link" to={'/parking'}>
                       Parking
                     </Link>
                   </li>

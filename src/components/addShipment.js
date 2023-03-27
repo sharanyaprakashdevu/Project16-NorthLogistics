@@ -15,7 +15,7 @@ export default function AddShipment() {
   const [addressTo, setaddressTo] = useState("");
   const [shipmentType, setshipmentType] = useState(false);
   const[selectedShip,setSelectedShip]=useState("");
-  const options=[' ','','','Boxes/Bags','Pallets','Machinery','Containers','box']
+  const options=['','','','Boxes/Bags','Pallets','Machinery','Containers','Box']
 
   const [serviceType,setserviceType]=useState(false);
   const [selectedService,setSelectedService]=useState("");
@@ -122,6 +122,7 @@ export default function AddShipment() {
             //access values
             onChange={(e)=>setfname(e.target.value)}
           />
+          
         </div>
        
         <div className="mb-3">

@@ -1,7 +1,7 @@
 import React from 'react'
 import '../node_modules/bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link,Switch } from 'react-router-dom'
 
 import Login from './components/login.component'
 import SignUp from './components/signup.component'
@@ -13,6 +13,10 @@ import Users from './components/users'
 import Rental from './components/rental'
 import AddShipment from './components/addShipment'
 import ConfirmShipment from './components/confirmShipment'
+import Storage from './components/storage'
+import ViewStorage from './components/viewStorage'
+import Parking from './components/parking'
+import ViewParking from './components/viewParking'
 
 
 function App() {
@@ -46,7 +50,7 @@ function App() {
           <div className="auth-inner">
             <Routes>
               
-            <Route exact path="/" element={<Login />} />
+              <Route exact path="/" element={<Login />} />
               <Route path="/sign-in" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/userPage" element={<UserPage />} />
@@ -55,9 +59,14 @@ function App() {
               <Route path="/users" element={<Users />} />
               <Route path="/addVehicle" element={<AddVehicle />} />
               <Route path="/rental" element={<Rental />} />
+            
               <Route path="/addShipment" element={<AddShipment />} />
               <Route path="/confirmShipment" element={<ConfirmShipment />} />
-              
+             
+              <Route path="/storage" element={<Storage />} />
+              <Route path="/viewStorage" element={<ViewStorage />} />
+              <Route path="/parking" element={<Parking />} />
+              <Route path="/viewParking" element={<ViewParking />} />
               
             </Routes>
           </div>

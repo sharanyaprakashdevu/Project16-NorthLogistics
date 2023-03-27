@@ -4,6 +4,17 @@ const mongoose=require("mongoose");
 const cors=require("cors");
 app.use(cors());
 
+const redis=require("redis");
+let redisClient;
+
+//Redis connection
+(async ()=>{
+    redisClient=redis.createClient();
+    redisClient.on('error',(error)=>console.log('Redis Error'+error));
+    await redisClient.connect();
+})();
+
+
 app.use(express.json());
 const bcrypt=require("bcryptjs");
 
@@ -146,9 +157,19 @@ app.post("/vehicle_register",async(req,res)=>{
 //fetch user data
 app.get("/getAllUser",async(req,res)=>{
     try{
+    const cachedData=await redisClient.get('getAllUser');
+    if(cachedData){
+        res.send(JSON.parse(cachedData));
+        return;
+    }
+    else{
+
+    
         const allUser=await User.find({});
         res.send({status:"ok",data:allUser});
+        await redisClient.set('getAllUser',JSON.stringify(res));
         
+    }   
     }
     catch(error){
         console.log(error);
@@ -160,6 +181,7 @@ app.get("/getAllVehicle",async(req,res)=>{
     try{
         const allVehicle=await Vehicle.find({});
         res.send({status:"ok",data:allVehicle});
+        
         
     }
     catch(error){
@@ -218,9 +240,9 @@ app.post("/shipment_register",async(req,res)=>{
 
 //fetch shipment details
 app.get("/getShipmentDetails",async(req,res)=>{
-    const {userid} =req.body;
+    const {id} =req.body;
     try{
-        const shipmentDetails=await Shipment.find({});
+        const shipmentDetails=await Shipment.find();
         res.send({status:"ok",data:shipmentDetails});
         
     }
@@ -228,6 +250,100 @@ app.get("/getShipmentDetails",async(req,res)=>{
         console.log(error);
     }
 });
+
+//storage api
+require("./storageDetails");
+const Storage=mongoose.model("StorageInfo");
+
+app.post("/storage_register",async(req,res)=>{
+
+    const {fname,phone,storageType,dimensions,storageDate,storageDuration}=req.body;
+  
+    
+    try{
+
+    await Storage.create({
+      fname,
+      phone,
+      storageType,
+      dimensions,
+      storageDate,
+      storageDuration
+      
+       });
+
+        res.send({status:"ok"});
+        
+    }
+    catch(error)
+    {
+        res.send({status:"error1"});
+        
+    }
+});
+
+
+//fetch storage details
+app.get("/getStorageDetails",async(req,res)=>{
+    //const {userid} =req.body;
+    try{
+        const storageDetails=await Storage.find({});
+        res.send({status:"ok",data:storageDetails});
+        
+    }
+    catch(error){
+        console.log(error);
+    }
+});
+
+
+//parking api
+
+require("./parkDetail");
+const Parking=mongoose.model("ParkingInfo");
+
+app.post("/park_register",async(req,res)=>{
+
+    const {fname,phone,vehicleName,vehicleNumber,vehicleType,parkingDate,parkingDuration}=req.body;
+  
+    
+    try{
+
+    await Parking.create({
+      fname,
+      phone,
+      vehicleName,
+      vehicleNumber,
+      vehicleType,
+      parkingDate,
+      parkingDuration
+     
+       });
+
+        res.send({status:"ok"});
+        
+    }
+    catch(error)
+    {
+        res.send({status:"error1"});
+        
+    }
+});
+
+//fetch park details
+app.get("/getParkDetail",async(req,res)=>{
+    const {userid} =req.body;
+    try{
+        const parkDetail=await Parking.find({});
+        res.send({status:"ok",data:parkDetail});
+        
+    }
+    catch(error){
+        console.log(error);
+    }
+});
+
+
 
 
 app.listen(5000,()=>{

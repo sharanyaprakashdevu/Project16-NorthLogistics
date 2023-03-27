@@ -1,36 +1,30 @@
 import React, { Component,useEffect,useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import AddShipment from './addShipment'
+//import Parking from './parking'
 
-require("./addShipment");
-export default function ConfirmShipment(){
+require("./parking");
+export default function ViewParking(){
     const [data, setData] = useState([]);
 
     useEffect(()=>{
         
        
-    getShipmentDetails();
-},[]);
-    
-const getShipmentDetails=()=>{
-    
-   
-    fetch("http://localhost:5000/getShipmentDetails",{
+    fetch("http://localhost:7000/getParkDetail",{
             method:"GET"         
           })
           
       .then((res)=>res.json())
       .then((data)=>{
-      console.log(data,"Shipment Data");
+      console.log(data,"parkDetail");
       setData(data.data);
       
-      });
-  
-}
+    });
+},[]);
+    
+
 
 
 return(
-    
 <div className="auth-wrapper">
         <div style={{width:"auto"}}>
             <h2>Vehicle Info</h2>
@@ -53,11 +47,11 @@ return(
                       
                      <td> {i.fname}</td>
                       <td>{i.phone}</td>
-                     <td>{i.addressFrom}</td>
-                     <td> {i.addressTo}</td>
-                     <td> {i.selectedShip}</td>
-                     <td> {i.selectedService}</td>
-                     <td> {i.dimensions}</td>
+                     <td>{i.vehicleName}</td>
+                     <td> {i.vehicleNumber}</td>
+                     <td> {i.vehicleType}</td>
+                     <td> {i.parkingDate}</td>
+                     <td> {i.parkingDuration}</td>
              
                     </tr>
                           
@@ -66,6 +60,5 @@ return(
         </table>
         </div>
     </div>   
-)   
-             
+)          
  }
