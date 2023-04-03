@@ -26,7 +26,7 @@ export default function Parking() {
     e.preventDefault();
     
     console.log(fname,phone,vehicleName,vehicleNumber,vehicleType,parkingDate,parkingDuration);
-    fetch("http://localhost:5image.png000/park_register",{
+    fetch("http://localhost:5000/park_register",{
       method:"POST",
       crossDomain:true,
       headers:{

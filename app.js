@@ -12,6 +12,7 @@ let redisClient;
     redisClient=redis.createClient();
     redisClient.on('error',(error)=>console.log('Redis Error'+error));
     await redisClient.connect();
+    console.log("Connected to redis server");
 })();
 
 
@@ -156,11 +157,11 @@ app.post("/vehicle_register",async(req,res)=>{
 
 //fetch user data
 app.get("/getAllUser",async(req,res)=>{
-    try{
+   try{
     const cachedData=await redisClient.get('getAllUser');
     if(cachedData){
-        res.send(JSON.parse(cachedData));
-        return;
+      res.send(JSON.parse(cachedData));
+       return;
     }
     else{
 
@@ -169,7 +170,7 @@ app.get("/getAllUser",async(req,res)=>{
         res.send({status:"ok",data:allUser});
         await redisClient.set('getAllUser',JSON.stringify(res));
         
-    }   
+       }   
     }
     catch(error){
         console.log(error);
@@ -250,6 +251,8 @@ app.get("/getShipmentDetails",async(req,res)=>{
         console.log(error);
     }
 });
+
+
 
 //storage api
 require("./storageDetails");

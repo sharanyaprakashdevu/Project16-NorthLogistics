@@ -12,7 +12,7 @@ export default function ConfirmShipment(){
     getShipmentDetails();
 },[]);
     
-const getShipmentDetails=()=>{
+const getShipmentDetails=(id)=>{
     
    
     fetch("http://localhost:5000/getShipmentDetails",{
@@ -44,6 +44,8 @@ return(
                 <th>Daily charge</th>
                 </tr>
 
+
+
             {data.map(i=>{
                    
                   return(
@@ -63,6 +65,7 @@ return(
                           
                     )
          })}
+        
         </table>
         </div>
     </div>   

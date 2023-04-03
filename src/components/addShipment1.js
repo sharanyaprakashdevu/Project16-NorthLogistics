@@ -2,77 +2,14 @@ import React, { Component,useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
 import{FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCaretDown} from "@fortawesome/free-solid-svg-icons";
-import ConfirmShipment from './confirmShipment'
-//import React from 'react'
-//import Select from 'react-select'
 
-export default function AddShipment() {
+export default function AddShipment1() {
 
-  //Get values
-  const [fname, setfname] = useState("");
-  const [phone, setphone] = useState("");
-  const [addressFrom, setaddressFrom] = useState("");
-  const [addressTo, setaddressTo] = useState("");
-  const [shipmentType, setshipmentType] = useState(false);
-  const[selectedShip,setSelectedShip]=useState("");
-  const options=['','','','Boxes/Bags','Pallets','Machinery','Containers','Box']
 
-  const [serviceType,setserviceType]=useState(false);
-  const [selectedService,setSelectedService]=useState("");
-  const services=['AirFrieght Door to Airport','OceanFrieght Door to Port','Door to Door by Air',
-                    'Door to Door by Sea','Warehouse to warehouse']
 
-  const [dimensions,setdimensions]=useState("");
-  //const [additional,setadditional]=useState("")
-
-  
-  //Submit function
-  const handleSubmit=(e)=>{
-    e.preventDefault();
-    
-    console.log(fname,phone,addressFrom,addressTo,selectedShip,selectedService,dimensions);
-    fetch("http://localhost:5000/shipment_register",{
-      method:"POST",
-      crossDomain:true,
-      headers:{
-        "Content-Type":"application/json",
-        Accept:"application/json",
-        "Access-Control-Allow-Origin":"*",
-      },
-      body:JSON.stringify({
-      fname,
-      phone,
-      addressFrom,
-      addressTo,
-      selectedShip,
-      selectedService,
-      dimensions
-    
-        
-      }),
-    })
-    .then((res)=>res.json())
-    .then((data)=>{
-     console.log(data,"shipmentRegister");
-    
-
-    if(data.status=="ok"){
-      alert("Shipment details added successfully");
-      //window.localStorage.setItem("token",data.data);
-      window.location.href ="./confirmShipment";
-      }
-      else{
-        alert("Already Exist");
-      }
-    });
-    
-  }
-
- 
-    return (
-      <div>
-
-          <nav className="navbar navbar-expand-lg navbar-light fixed-top">
+return(
+    <div>
+        <nav className="navbar navbar-expand-lg navbar-light fixed-top">
            <div className="container">
               <Link className="navbar-brand" to={'/sign-in'}>
                 North Logistic
@@ -110,7 +47,7 @@ export default function AddShipment() {
 
 
       <div style={{width:"auto"}}>
-      <form onSubmit={handleSubmit} style={{width:"auto"}} action="confirmShipment.js">
+      <form onSubmit={handleSubmit} style={{width:"auto"}}>
         <h3>Shipment</h3>
         
         <div className="mb-3">
@@ -217,9 +154,6 @@ export default function AddShipment() {
           />
         </div>
 
-
-        
-
         <div className="d-grid">
           
           <button type="submit" className="btn btn-primary" >
@@ -231,9 +165,8 @@ export default function AddShipment() {
       </form>
       </div>  
 
-      
-</div>    
+    </div>
 
-    )
-  }
 
+)
+}
