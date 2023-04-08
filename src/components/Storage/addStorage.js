@@ -2,9 +2,10 @@ import React, { Component, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import Navbar from "../NavBar";
 //import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars';
 
-export default function Storage() {
+export default function AddStorage() {
   const [fname, setfname] = useState("");
   const [phone, setphone] = useState("");
 
@@ -23,6 +24,9 @@ export default function Storage() {
       alert("Please select storage type");
     }
 
+    const token = localStorage.getItem("token", "");
+
+
     fetch("http://localhost:5000/storage_register", {
       method: "POST",
       crossDomain: true,
@@ -38,6 +42,7 @@ export default function Storage() {
         dimensions,
         storageDate,
         storageDuration,
+        token
       }),
     })
       .then((res) => res.json())
@@ -56,40 +61,7 @@ export default function Storage() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>
-            North Logistic
-          </Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/userPage"}>
-                  Home
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/rental"}>
-                  Rental
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/storage"}>
-                  Storage
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/parking"}>
-                  Parking
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div style={{ width: "auto" }}>
         <form onSubmit={handleSubmit} style={{ width: "auto" }}>

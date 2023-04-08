@@ -1,50 +1,48 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 
 export default class Login extends Component {
-  
-  constructor(props){
-    super(props)
-    this.state={
-      email:"",
-      password:""
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
     };
     //bind data
-  this.handleSubmit=this.handleSubmit.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e){
+  handleSubmit(e) {
     e.preventDefault();
-    const{email,password} = this.state;
-    console.log(email,password);
+    const { email, password } = this.state;
+    console.log(email, password);
 
-    fetch("http://localhost:5000/login-user",{
-      method:"POST",
-      crossDomain:true,
-      headers:{
-        "Content-Type":"application/json",
-        Accept:"application/json",
-        "Access-Control-Allow-Origin":"*",
+    fetch("http://localhost:5000/login-user", {
+      method: "POST",
+      crossDomain: true,
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+        "Access-Control-Allow-Origin": "*",
       },
-      body:JSON.stringify({
+      body: JSON.stringify({
         email,
-        password
+        password,
       }),
     })
-    .then((res)=>res.json())
-    .then((data)=>{
-    console.log(data,"userRegister");
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "userRegister");
 
-    if(data.status=="ok"){
-      alert("login successfull");
-      window.localStorage.setItem("token",data.data);
-      window.localStorage.setItem("loggedIn",true);
-      window.location.href ="/userPage";
-      }else{
-        alert("User Not Found");
-        window.location.href="/sign-up";
-      }
-    });
-
+        if (data.status == "ok") {
+          alert("login successfull");
+          window.localStorage.setItem("token", data.data);
+          window.localStorage.setItem("loggedIn", true);
+          window.location.href = "/userPage";
+        } else {
+          alert("User Not Found");
+          window.location.href = "/sign-up";
+        }
+      });
   }
 
   render() {
@@ -58,7 +56,8 @@ export default class Login extends Component {
             type="email"
             className="form-control"
             placeholder="Enter email"
-            onChange={e=>this.setState({email:e.target.value})}
+            required
+            onChange={(e) => this.setState({ email: e.target.value })}
           />
         </div>
 
@@ -68,7 +67,8 @@ export default class Login extends Component {
             type="password"
             className="form-control"
             placeholder="Enter password"
-            onChange={e=>this.setState({password:e.target.value})}
+            required
+            onChange={(e) => this.setState({ password: e.target.value })}
           />
         </div>
 
@@ -94,6 +94,6 @@ export default class Login extends Component {
           Forgot <a href="#">password?</a>
         </p>
       </form>
-    )
+    );
   }
 }

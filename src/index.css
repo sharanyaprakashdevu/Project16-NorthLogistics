@@ -52,6 +52,7 @@ html,
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
   transition: all 0.3s;
+  margin-top: 100px;
 }
 
 .auth-wrapper .form-control:focus {
@@ -66,18 +67,6 @@ html,
   padding-bottom: 20px;
 }
 
-.auth-wrapper table{
-  border:2px solid black;
-
-}
-
-.auth-wrapper th{
-  border:2px solid black;
-}
-
-.auth-wrapper td{
-  border:2px solid black;
-}
 .custom-control-label {
   font-weight: 400;
 }

@@ -2,6 +2,7 @@ import React, { Component, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
+import Navbar from "../NavBar";
 //import Park from './park'
 //import React from 'react'
 //import Select from 'react-select'
@@ -21,6 +22,8 @@ export default function Parking() {
   //Submit function
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const token = localStorage.getItem("token");
 
     console.log(
       fname,
@@ -47,6 +50,7 @@ export default function Parking() {
         vehicleType,
         parkingDate,
         parkingDuration,
+        token,
       }),
     })
       .then((res) => res.json())
@@ -65,40 +69,7 @@ export default function Parking() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>
-            North Logistic
-          </Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/userPage"}>
-                  Home
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/rental"}>
-                  Rental
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/storage"}>
-                  Storage
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/addShipment"}>
-                  Shipment
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div class="auth-inners">
         <form onSubmit={handleSubmit} style={{ width: "auto" }}>

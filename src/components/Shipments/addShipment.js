@@ -2,7 +2,7 @@ import React, { Component, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
-import ConfirmShipment from "./confirmShipment";
+import ConfirmShipment from "../confirmShipment";
 //import React from 'react'
 //import Select from 'react-select'
 
@@ -44,10 +44,12 @@ export default function AddShipment() {
 
     // console.log(fname,phone,addressFrom,addressTo,selectedShip,selectedService,dimensions);
 
-    if(!selectedService && !selectedShip){
-      alert("please select Service or select Ship")
-      return
+    if (!selectedService && !selectedShip) {
+      alert("please select Service or select Ship");
+      return;
     }
+
+    const token = localStorage.getItem("token", "");
 
     fetch("http://localhost:5000/shipment_register", {
       method: "POST",
@@ -65,6 +67,7 @@ export default function AddShipment() {
         selectedShip,
         selectedService,
         dimensions,
+        token,
       }),
     })
       .then((res) => res.json())
@@ -145,8 +148,8 @@ export default function AddShipment() {
               value={phone}
               onChange={(e) => {
                 const phoneRegex = /^[0-9]+$/;
-                if(phoneRegex.test(e.target.value) && phone.length <= 9)
-                setphone(e.target.value);
+                if (phoneRegex.test(e.target.value) && phone.length <= 9)
+                  setphone(e.target.value);
               }}
             />
           </div>

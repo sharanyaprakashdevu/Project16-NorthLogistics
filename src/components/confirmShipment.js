@@ -1,8 +1,8 @@
 import React, { Component,useEffect,useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'
-import AddShipment from './addShipment'
+import AddShipment from './Shipments/addShipment'
 
-require("./addShipment");
+require("./Shipments/addShipment");
 export default function ConfirmShipment(){
     const [data, setData] = useState([]);
 

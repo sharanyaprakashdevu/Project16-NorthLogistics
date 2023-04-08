@@ -1,5 +1,6 @@
 import React, { Component, useEffect, useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import Navbar from "./NavBar";
 
 export default function Rental() {
   const [data, setData] = useState([]);
@@ -17,70 +18,44 @@ export default function Rental() {
 
   return (
     <div>
-      <nav className="navbar navbar-expand-lg navbar-light fixed-top">
-        <div className="container">
-          <Link className="navbar-brand" to={"/sign-in"}>
-            North Logistic
-          </Link>
-          <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-            <ul className="navbar-nav ml-auto">
-              <li className="nav-item">
-                <Link className="nav-link" to={"/userPage"}>
-                  Home
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/addShipment"}>
-                  Shipment
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/storage"}>
-                  Storage
-                </Link>
-              </li>
-
-              <li className="nav-item">
-                <Link className="nav-link" to={"/parking"}>
-                  Parking
-                </Link>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
+      <Navbar />
 
       <div className="auth-wrapper">
         <div style={{ width: "auto" }}>
-          <h2>Vehicle Info</h2>
+          <h2>All Available Vehicle Details</h2>
 
-          <table style={{ width: 500 }}>
-            <tr>
-              <th>Vehicle Image</th>
-              <th>Vehicle Type</th>
-              <th>Load Capacity</th>
-              <th>Passenger Seating</th>
-              <th>4 Hours charge</th>
-              <th>Daily charge</th>
-            </tr>
+          <table className="table">
+            <thead className="thead-light">
+              <tr>
+                <th scope="col">S no</th>
 
-            {data.map((i) => {
-              return (
-                <tr>
-                  <td>
-                    <img width={100} height={100} scr={i.image} />
-                  </td>
+                <th>Vehicle Image</th>
+                <th>Vehicle Type</th>
+                <th>Load Capacity</th>
+                <th>Passenger Seating</th>
+                <th>4 Hours charge</th>
+                <th>Daily charge</th>
+              </tr>
+            </thead>
+            <tbody>
+              {data.map((i, index) => {
+                if (!i.image && !i.vehicleType) return null;
+                return (
+                  <tr>
+                    <td>{index + 1}</td>
+                    <td>
+                      <img width={100} height={100} src={i.image} />
+                    </td>
 
-                  <td>{i.vehicleType}</td>
-                  <td>{i.loadCapacity}</td>
-                  <td>{i.passengerSeating}</td>
-                  <td>{i.charges}</td>
-                  <td>{i.chargesDaily}</td>
-                </tr>
-              );
-            })}
+                    <td>{i.vehicleType}</td>
+                    <td>{i.loadCapacity}</td>
+                    <td>{i.passengerSeating}</td>
+                    <td>{i.charges}</td>
+                    <td>{i.chargesDaily}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         </div>
       </div>
