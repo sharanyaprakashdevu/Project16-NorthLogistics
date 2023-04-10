@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown } from "@fortawesome/free-solid-svg-icons";
 import Navbar from "../NavBar";
+import Payment from "../Payment";
 //import {DateRangePickerComponent} from '@syncfusion/ej2-react-calendars';
 
 export default function AddStorage() {
@@ -16,16 +17,24 @@ export default function AddStorage() {
   const [dimensions, setdimensions] = useState("");
   const [storageDate, setstorageDate] = useState("");
   const [storageDuration, setstorageDuration] = useState("");
+  const [isPaymentPage, setIsPaymentPage] = useState(false);
 
-  //Submit function
-  const handleSubmit = (e) => {
+
+   //procede to pay
+   const procedeToPay = (e) => {
     e.preventDefault();
     if (!storageType) {
       alert("Please select storage type");
+      return
     }
+    setIsPaymentPage(true);
+  };
+
+  //Submit function
+  const handleSubmit = (e) => {
+  
 
     const token = localStorage.getItem("token", "");
-
 
     fetch("http://localhost:5000/storage_register", {
       method: "POST",
@@ -42,7 +51,7 @@ export default function AddStorage() {
         dimensions,
         storageDate,
         storageDuration,
-        token
+        token,
       }),
     })
       .then((res) => res.json())
@@ -63,105 +72,125 @@ export default function AddStorage() {
     <div>
       <Navbar />
 
-      <div style={{ width: "auto" }}>
-        <form onSubmit={handleSubmit} style={{ width: "auto" }}>
-          <h3>Storage</h3>
+      {isPaymentPage && (
+        <Payment
+          procedeToPay={handleSubmit}
+          backTo={() => {
+            setIsPaymentPage(false);
+          }}
+        />
+      )}
 
-          <div className="mb-3">
-            <label>First Name</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="First name"
-              required
-              //access values
-              onChange={(e) => setfname(e.target.value)}
-            />
-          </div>
+      {!isPaymentPage && (
+        <div style={{ width: "auto" }}>
+          <form onSubmit={procedeToPay} style={{ width: "auto" }}>
+            <h3>Storage</h3>
 
-          <div className="mb-3">
-            <label>Phone</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="First name"
-              required
-              //access values
-              onChange={(e) => setphone(e.target.value)}
-            />
-          </div>
-
-          <div className="dropdown">
-            <label>Storage Type</label>
-            <div
-              className="dropdown-btn"
-              onClick={(e) => setSelectedStorage(!selectedStorage)}
-            >
-              {storageType}
-              <span className="fas fa-caret-down"></span>
-              <FontAwesomeIcon icon={faCaretDown} />
+            <div className="mb-3">
+              <label>First Name</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First name"
+                required
+                //access values
+                value={fname}
+                onChange={(e) => {
+                  const regex = /^[a-zA-Z]+$/;
+                  if (regex.test(e.target.value)) setfname(e.target.value);
+                }}
+              />
             </div>
-            {selectedStorage && (
-              <div className="dropdown-content">
-                {options.map((option) => (
-                  <div
-                    onClick={(e) => {
-                      setstorageType(option);
-                      setSelectedStorage(false);
-                    }}
-                    className="dropdown-item"
-                  >
-                    {option}
-                  </div>
-                ))}
+
+            <div className="mb-3">
+              <label>Phone</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First name"
+                required
+                //access values
+                value={phone}
+                onChange={(e) => {
+                  const phoneRegex = /^[0-9]+$/;
+                  if (phoneRegex.test(e.target.value) && phone.length <= 9)
+                    setphone(e.target.value);
+                }}
+              />
+            </div>
+
+            <div className="dropdown">
+              <label>Storage Type</label>
+              <div
+                className="dropdown-btn"
+                onClick={(e) => setSelectedStorage(!selectedStorage)}
+              >
+                {storageType}
+                <span className="fas fa-caret-down"></span>
+                <FontAwesomeIcon icon={faCaretDown} />
               </div>
-            )}
-          </div>
+              {selectedStorage && (
+                <div className="dropdown-content">
+                  {options.map((option) => (
+                    <div
+                      onClick={(e) => {
+                        setstorageType(option);
+                        setSelectedStorage(false);
+                      }}
+                      className="dropdown-item"
+                    >
+                      {option}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
 
-          <div className="mb-3">
-            <label>Dimensions</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="First name"
-              required
-              //access values
-              onChange={(e) => setdimensions(e.target.value)}
-            />
-          </div>
+            <div className="mb-3">
+              <label>Dimensions</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First name"
+                required
+                //access values
+                onChange={(e) => setdimensions(e.target.value)}
+              />
+            </div>
 
-          <div className="mb-3">
-            <label>Storage Date</label>
+            <div className="mb-3">
+              <label>Storage Date</label>
 
-            <input
-              type="date"
-              className="form-control"
-              placeholder="First name"
-              required
-              //access values
-              onChange={(e) => setstorageDate(e.target.value)}
-            />
-          </div>
+              <input
+                type="date"
+                className="form-control"
+                placeholder="First name"
+                required
+                //access values
+                onChange={(e) => setstorageDate(e.target.value)}
+              />
+            </div>
 
-          <div className="mb-3">
-            <label>Storage Duration</label>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="First name"
-              required
-              //access values
-              onChange={(e) => setstorageDuration(e.target.value)}
-            />
-          </div>
+            <div className="mb-3">
+              <label>Storage Duration</label>
+              <input
+                type="text"
+                className="form-control"
+                placeholder="First name"
+                required
+                //access values
+                onChange={(e) => setstorageDuration(e.target.value)}
+              />
+            </div>
 
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
-              Confirm Storage
-            </button>
-          </div>
-        </form>
-      </div>
+            <div className="d-grid">
+              <button type="submit" className="btn btn-primary">
+                Confirm Storage
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 }

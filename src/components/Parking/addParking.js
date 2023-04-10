@@ -83,17 +83,22 @@ export default function Parking() {
               placeholder="First name"
               required
               //access values
-              onChange={(e) => setfname(e.target.value)}
+              value={fname}
+              onChange={(e) => {
+                const regex = /^[a-zA-Z]+$/;
+                if (regex.test(e.target.value)) setfname(e.target.value);
+              }}
             />
           </div>
 
           <div className="mb-3">
-            <label>Email / Number</label>
+            <label>Phone Number</label>
             <input
               type="phone"
               className="form-control"
               required
-              placeholder="Email / Number"
+              placeholder="Mobile Number"
+              value={phone}
               onChange={(e) => setphone(e.target.value)}
             />
           </div>

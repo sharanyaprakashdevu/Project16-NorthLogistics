@@ -6,6 +6,7 @@ import ViewStorage from "./viewStorage";
 export default function Storage() {
   const [data, setData] = useState([]);
   const [allImage, setAllImage] = useState("");
+
   useEffect(() => {
     fetch("http://localhost:5000/getStorageDetails", {
       method: "GET",

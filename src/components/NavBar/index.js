@@ -6,15 +6,21 @@ export default class Navbar extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-light fixed-top">
         <div className="container">
-        <img src="n.png" width={40} height={40} />
+          <img src="n.png" width={40} height={40} />
           <Link className="navbar-brand" to={"/sign-in"}>
-             &nbsp; North Logistic
+            &nbsp; North Logistic
           </Link>
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto">
               <li className="nav-item">
                 <Link className="nav-link" to={"/userPage"}>
                   Home
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link className="nav-link" to={"/rental"}>
+                  Rental
                 </Link>
               </li>
 
